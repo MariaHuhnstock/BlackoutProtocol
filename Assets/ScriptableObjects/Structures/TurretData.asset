@@ -16,6 +16,6 @@ MonoBehaviour:
   maxHealth: 8
   powerCost: 4
   startsPowered: 0
-  range: 5
+  range: 7
   fireInterval: 0.5
   damage: 1
