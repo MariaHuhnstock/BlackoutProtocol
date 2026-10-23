@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-[RequireComponent(typeof(PoweredStructure))]
 public class LightSource : MonoBehaviour
 {
     private static readonly List<LightSource> all = new List<LightSource>();
@@ -13,7 +12,8 @@ public class LightSource : MonoBehaviour
 
     private PoweredStructure structure;
 
-    public bool IsActive => structure != null && structure.IsPowered;
+    // Ohne PoweredStructure (z. B. Generator) leuchtet die Quelle immer / Without a PoweredStructure the source is always on
+    public bool IsActive => structure == null || structure.IsPowered;
     public float EffectiveRadius => light2D != null ? light2D.pointLightOuterRadius * effectiveRadiusFactor : 0f;
 
     private void Awake()
