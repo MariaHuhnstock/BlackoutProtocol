@@ -9,6 +9,8 @@ public class PowerInput : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0f) return;
+
         if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
 
         Vector3 world = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());

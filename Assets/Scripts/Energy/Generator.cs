@@ -20,6 +20,7 @@ public class Generator : MonoBehaviour
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
+        if (GameManager.IsReloading) return;
 
         if (PowerManager.Instance != null)
         {

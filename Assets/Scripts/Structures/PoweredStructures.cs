@@ -41,6 +41,8 @@ public class PoweredStructure : MonoBehaviour, IPowerConsumer
 
     protected virtual void OnDestroy()
     {
+        if (GameManager.IsReloading) return;
+
         if (PowerManager.Instance != null)
             PowerManager.Instance.Unregister(this);
     }

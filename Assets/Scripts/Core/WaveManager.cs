@@ -88,7 +88,7 @@ public class WaveManager : MonoBehaviour
         while (PrepTimeLeft > 0f)
         {
             // Leertaste: Welle früher starten / Space: start wave early
-            if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+            if (Time.timeScale > 0f && Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
                 break;
 
             PrepTimeLeft -= Time.deltaTime;

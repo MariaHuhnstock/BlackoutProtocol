@@ -28,15 +28,8 @@ public class WaveHUD : MonoBehaviour
                 break;
 
             case GamePhase.Won:
-                waveText.text =
-                    "SIEG / VICTORY\n" +
-                    $"Zeit {FormatTime(game.ElapsedTime)}  |  Besiegt {game.EnemiesKilled}";
-                break;
-
             case GamePhase.Lost:
-                waveText.text =
-                    "GENERATOR ZERSTÖRT\nGENERATOR DESTROYED\n" +
-                    $"Zeit {FormatTime(game.ElapsedTime)}  |  Besiegt {game.EnemiesKilled}";
+                waveText.text = string.Empty;
                 break;
         }
     }
