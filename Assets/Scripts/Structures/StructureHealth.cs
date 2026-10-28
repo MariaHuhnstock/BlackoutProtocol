@@ -12,12 +12,17 @@ public class StructureHealth : MonoBehaviour, IDamageable
     [SerializeField] private StructureData data;
 
     private GridOccupant occupant;
+    private PoweredStructure powered;
 
     public float CurrentHealth { get; private set; }
     public float MaxHealth => data.maxHealth;
     public bool IsDestroyed { get; private set; }
     public string DisplayName => data.displayName;
+    public int RebuildCost => data.rebuildCost;
     public Vector2Int GridPosition => occupant.GridPosition;
+
+    // Der Generator ist nicht wiederaufbaubar / The generator cannot be rebuilt
+    public bool CanBeRebuilt => GetComponent<Generator>() == null;
 
     public event Action<float, float> OnHealthChanged;          // current, max
     public static event Action<StructureHealth> OnAnyDestroyed;
@@ -25,12 +30,10 @@ public class StructureHealth : MonoBehaviour, IDamageable
     private void Awake()
     {
         occupant = GetComponent<GridOccupant>();
+        powered = GetComponent<PoweredStructure>();
 
-        if (data == null)
-        {
-            PoweredStructure powered = GetComponent<PoweredStructure>();
-            if (powered != null) data = powered.Data;
-        }
+        if (data == null && powered != null)
+            data = powered.Data;
 
         CurrentHealth = data.maxHealth;
     }
@@ -61,7 +64,42 @@ public class StructureHealth : MonoBehaviour, IDamageable
     {
         IsDestroyed = true;
         Debug.Log($"{DisplayName} zerstört / destroyed");
+
+        // Energie freigeben / Release power
+        if (powered != null && powered.IsPowered && PowerManager.Instance != null)
+            PowerManager.Instance.TryTogglePower(powered);
+
         OnAnyDestroyed?.Invoke(this);
-        Destroy(gameObject);
+
+        bool ruinCreated = CanBeRebuilt
+            && RebuildManager.Instance != null
+            && RebuildManager.Instance.CreateRuin(this);
+
+        if (ruinCreated)
+        {
+            occupant.Release();
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
+    public void Rebuild()
+    {
+        if (!IsDestroyed) return;
+
+        IsDestroyed = false;
+        CurrentHealth = MaxHealth;
+        occupant.Claim();
+        gameObject.SetActive(true);
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+    }
+
+    [ContextMenu("Test: 50 % Schaden / 50% damage")]
+    private void TestDamageHalf() => TakeDamage(MaxHealth * 0.5f);
+
+    [ContextMenu("Test: Zerstören / Destroy")]
+    private void TestDestroy() => TakeDamage(MaxHealth);
 }

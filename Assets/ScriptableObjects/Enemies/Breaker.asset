@@ -17,4 +17,5 @@ MonoBehaviour:
   moveSpeed: 1
   attackDamage: 3
   attackInterval: 1.5
+  scrapReward: 5
   targeting: {fileID: 11400000, guid: b34b7de5ecc80714aa525907f9b0c248, type: 2}

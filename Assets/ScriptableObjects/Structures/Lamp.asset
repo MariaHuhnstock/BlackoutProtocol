@@ -16,3 +16,4 @@ MonoBehaviour:
   maxHealth: 4
   powerCost: 1
   startsPowered: 1
+  rebuildCost: 3

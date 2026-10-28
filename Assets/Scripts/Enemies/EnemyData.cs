@@ -8,5 +8,6 @@ public class EnemyData : ScriptableObject
     public float moveSpeed = 2f;
     public float attackDamage = 1f;
     public float attackInterval = 1f;
+    public int scrapReward = 1;
     public TargetingStrategy targeting;
 }

@@ -7,4 +7,5 @@ public class StructureData : ScriptableObject
     public int maxHealth = 10;
     public int powerCost = 1;
     public bool startsPowered = false;
+    public int rebuildCost = 4;
 }

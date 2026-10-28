@@ -16,6 +16,7 @@ MonoBehaviour:
   maxHealth: 5
   powerCost: 3
   startsPowered: 0
+  rebuildCost: 6
   range: 6
   repairAmount: 1
   repairInterval: 0.5

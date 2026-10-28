@@ -18,4 +18,16 @@ public class GridOccupant : MonoBehaviour
         if (GridManager.Instance != null)
             GridManager.Instance.ClearOccupant(GridPosition);
     }
+
+    public void Release()
+    {
+        if (GridManager.Instance != null)
+            GridManager.Instance.ClearOccupant(GridPosition);
+    }
+
+    public void Claim()
+    {
+        if (GridManager.Instance != null)
+            GridManager.Instance.SetOccupant(GridPosition, gameObject);
+    }
 }
